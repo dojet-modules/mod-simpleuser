@@ -13,7 +13,7 @@ implements IDatabaseModule {
     private $aes_iv = 'noproblem.......';
 
     protected $database;
-    protected $tableNameUser;
+    protected $tableNameUser = 'simple_user';
 
     function __construct() {
         $this->persistentCookieName = '_pss';
