@@ -9,11 +9,11 @@ class ModuleSimpleUser extends BaseModule
 implements IDatabaseModule {
 
     private $persistentCookieName = '_pss';
-
-    private static $aes_key = 'iwillwin';
-    private static $aes_iv = 'noproblem.......';
+    private $aes_key = 'iwillwin';
+    private $aes_iv = 'noproblem.......';
 
     protected $database;
+    protected $tableNameUser;
 
     function __construct() {
         $this->persistentCookieName = '_pss';
@@ -27,6 +27,15 @@ implements IDatabaseModule {
 
     public function setDatabase($database) {
         $this->database = $database;
+        return $this;
+    }
+
+    public function tableNameUser() {
+        return $this->tableNameUser;
+    }
+
+    public function setTableNameUser($tableNameUser) {
+        $this->tableNameUser = $tableNameUser;
         return $this;
     }
 
