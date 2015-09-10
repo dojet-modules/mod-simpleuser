@@ -10,7 +10,7 @@
  */
 class DalSimpleUser extends BaseModuleDal {
 
-    protected static function module() {
+    static function module() {
         return ModuleSimpleUser::module();
     }
 
@@ -18,7 +18,7 @@ class DalSimpleUser extends BaseModuleDal {
         return static::module()->tableNameUser();
     }
 
-    protected static function createTable() {
+    static function createTable() {
         $tableNameUser = static::tableNameUser();
         $sql = "CREATE TABLE IF NOT EXISTS `$tableNameUser` (
                   `uid` int(11) NOT NULL AUTO_INCREMENT,
@@ -31,7 +31,7 @@ class DalSimpleUser extends BaseModuleDal {
         return self::doCreateTable($sql);
     }
 
-    public static function getUserFromUsernamePassword($username, $md5password); {
+    public static function getUserFromUsernamePassword($username, $md5password) {
         $tableNameUser = static::tableNameUser();
         self::realEscapeString($username);
         self::realEscapeString($md5password);
@@ -41,6 +41,14 @@ class DalSimpleUser extends BaseModuleDal {
         return self::rs2rowline($sql);
     }
 
+    public static function md5password($password) {
+        $md5password = $password;
+        for ($i = 0; $i < 5; $i++) {
+            $md5password = md5($md5password.md5($password));
+        }
+        return $md5password;
+    }
+
     public static function getUserList() {
         $tableNameUser = static::tableNameUser();
         $sql = "SELECT *
@@ -48,9 +56,12 @@ class DalSimpleUser extends BaseModuleDal {
         return self::rs2array($sql);
     }
 
-    public static function addUser($username) {
+    public static function addUser($username, $password) {
+        $md5password = self::md5password($password);
         $arrIns = array(
             'username' => $username,
+            'md5password' => $md5password,
+            'createtime' => time(),
             );
         return self::doInsert(static::tableNameUser(), $arrIns);
     }
