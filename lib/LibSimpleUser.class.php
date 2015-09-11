@@ -7,6 +7,8 @@
  * @author liyan
  * @since 2014 12 18
  */
+namespace Mod\SimpleUser;
+
 class LibSimpleUser {
 
     protected static function persistentCookieName() {

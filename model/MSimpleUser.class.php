@@ -3,6 +3,8 @@
  * @author liyan
  * @since 2015 7 21
  */
+namespace Mod\SimpleUser;
+
 class MSimpleUser {
 
     const E_NOT_SIGNIN  = 0x00100001;   # 未登录

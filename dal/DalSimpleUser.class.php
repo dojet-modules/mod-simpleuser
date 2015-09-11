@@ -8,6 +8,8 @@
  * @author liyan
  * @since 2015 7 21
  */
+namespace Mod\SimpleUser;
+
 class DalSimpleUser extends BaseModuleDal {
 
     static function module() {

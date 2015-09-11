@@ -5,6 +5,11 @@
  * @author liyan
  * @since 2015 7 21
  */
+namespace Mod\SimpleUser;
+
+use \BEGLOBAL\BaseModule;
+use \BEGLOBAL\IDatabaseModule;
+
 class ModuleSimpleUser extends BaseModule
 implements IDatabaseModule {
 
