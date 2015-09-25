@@ -7,8 +7,8 @@
  */
 namespace Mod\SimpleUser;
 
-use \BEGLOBAL\BaseModule;
-use \BEGLOBAL\IDatabaseModule;
+use \BaseModule;
+use \IDatabaseModule;
 
 class ModuleSimpleUser extends BaseModule
 implements IDatabaseModule {
