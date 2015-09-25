@@ -9,6 +9,9 @@
  */
 namespace Mod\SimpleUser;
 
+use \MCookie;
+use \AESMcrypt;
+
 class LibSimpleUser {
 
     protected static function persistentCookieName() {

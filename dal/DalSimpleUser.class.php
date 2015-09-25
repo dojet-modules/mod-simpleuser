@@ -10,6 +10,8 @@
  */
 namespace Mod\SimpleUser;
 
+use \BaseModuleDal;
+
 class DalSimpleUser extends BaseModuleDal {
 
     static function module() {

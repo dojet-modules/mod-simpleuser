@@ -14,8 +14,8 @@ class ModuleSimpleUser extends BaseModule
 implements IDatabaseModule {
 
     private $persistentCookieName = '_pss';
-    private $aes_key = 'iwillwin';
-    private $aes_iv = 'noproblem.......';
+    private $aesKey = 'iwillwin';
+    private $aesIV = 'noproblem.......';
 
     protected $database;
     protected $tableNameUser = 'simple_user';

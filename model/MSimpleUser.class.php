@@ -10,9 +10,11 @@ class MSimpleUser {
     const E_NOT_SIGNIN  = 0x00100001;   # 未登录
     const E_LOGOFF      = 0x00100002;   # 已注销
 
+    protected $uid;
     protected $username;
 
-    function __construct($username) {
+    function __construct($uid, $username) {
+        $this->uid = $uid;
         $this->username = $username;
     }
 
@@ -20,9 +22,25 @@ class MSimpleUser {
         return $this->username;
     }
 
+    public function uid() {
+        return $this->uid;
+    }
+
+    public static function md5password($password) {
+        return md5($password);
+    }
+
     public static function simpleUserFromDBRecord($record) {
-        $simpleUser = new MSimpleUser($record['username']);
+        $simpleUser = new MSimpleUser($record['uid'], $record['username']);
         return $simpleUser;
+    }
+
+    public static function userFromUsernamePassword($username, $md5password) {
+        $userinfo = DalSimpleUser::getUserFromUsernamePassword($username, $md5password);
+        if (!$userinfo) {
+            throw new Exception("username and password not match", 1);
+        }
+        return MSimpleUser::simpleUserFromDBRecord($userinfo);
     }
 
     public static function getSigninUser() {
