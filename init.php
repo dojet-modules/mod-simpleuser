@@ -1,7 +1,8 @@
 <?php
 namespace Mod\SimpleUser;
 
-use \Dojet\DAutoloader;
+use \DAutoloader;
+use \Config;
 
 DAutoloader::getInstance()->addNamespacePathArray(__NAMESPACE__,
     array(
