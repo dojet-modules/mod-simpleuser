@@ -38,7 +38,7 @@ class MSimpleUser {
     public static function userFromUsernamePassword($username, $md5password) {
         $userinfo = DalSimpleUser::getUserFromUsernamePassword($username, $md5password);
         if (!$userinfo) {
-            throw new Exception("username and password not match", 1);
+            throw new \Exception("username and password not match", 1);
         }
         return MSimpleUser::simpleUserFromDBRecord($userinfo);
     }
@@ -46,14 +46,14 @@ class MSimpleUser {
     public static function getSigninUser() {
         $auth = LibSimpleUser::resolvePersistentAuth();
         if (!$auth) {
-            throw new Exception("not signin", self::E_NOT_SIGNIN);
+            throw new \Exception("not signin", self::E_NOT_SIGNIN);
         }
         list($username, $md5password) = $auth;
         LibSimpleUser::persistentAuth($username, $md5password);
 
         $record = DalSimpleUser::getUserFromUsernamePassword($username, $md5password);
         if (!$record) {
-            throw new Exception("user has been logoff", self::E_LOGOFF);
+            throw new \Exception("user has been logoff", self::E_LOGOFF);
         }
 
         return MSimpleUser::simpleUserFromDBRecord($record);
