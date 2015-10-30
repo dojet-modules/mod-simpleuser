@@ -32,7 +32,14 @@ class DalSimpleUser extends BaseModuleDal {
                   PRIMARY KEY (`uid`),
                   UNIQUE KEY `username` (`username`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户';";
-        return self::doCreateTable($sql);
+        self::doCreateTable($sql);
+
+        $arrIns = array(
+            'username' => 'admin',
+            'md5password' => md5('admin'),
+            'createtime' => time(),
+            );
+        self::doInsert($tableNameUser, $arrIns);
     }
 
     public static function getUserFromUsernamePassword($username, $md5password) {
