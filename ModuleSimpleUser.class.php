@@ -26,6 +26,10 @@ implements IDatabaseModule {
         $this->aes_iv = 'noproblem.......';
     }
 
+    protected function depends() {
+        return array();
+    }
+
     public function database() {
         return $this->database;
     }

@@ -22,7 +22,7 @@ class DalSimpleUser extends BaseModuleDal {
         return static::module()->tableNameUser();
     }
 
-    static function createTable() {
+    static function init() {
         $tableNameUser = static::tableNameUser();
         $sql = "CREATE TABLE IF NOT EXISTS `$tableNameUser` (
                   `uid` int(11) NOT NULL AUTO_INCREMENT,
