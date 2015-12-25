@@ -44,8 +44,8 @@ class DalSimpleUser extends BaseModuleDal {
 
     public static function getUserFromUsernamePassword($username, $md5password) {
         $tableNameUser = static::tableNameUser();
-        self::realEscapeString($username);
-        self::realEscapeString($md5password);
+        self::escape($username);
+        self::escape($md5password);
         $sql = "SELECT *
                 FROM $tableNameUser
                 WHERE username='$username' AND md5password='$md5password'";
