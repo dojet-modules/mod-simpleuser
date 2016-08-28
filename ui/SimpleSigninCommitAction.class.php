@@ -7,6 +7,7 @@
  * @since 2016 8 27
  */
 namespace Mod\SimpleUser;
+use \MRequest;
 
 class SimpleSigninCommitAction extends AbstractSimpleUserBaseAction {
 
