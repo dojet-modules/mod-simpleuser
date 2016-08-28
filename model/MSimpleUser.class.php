@@ -4,6 +4,7 @@
  * @since 2015 7 21
  */
 namespace Mod\SimpleUser;
+use \DAssert;
 
 class MSimpleUser {
 
@@ -27,7 +28,11 @@ class MSimpleUser {
     }
 
     public static function md5password($password) {
-        return md5($password);
+        $md5password = $password;
+        for ($i = 0; $i < 5; $i++) {
+            $md5password = md5($md5password);
+        }
+        return $md5password;
     }
 
     public static function simpleUserFromDBRecord($record) {
@@ -57,6 +62,19 @@ class MSimpleUser {
         }
 
         return MSimpleUser::simpleUserFromDBRecord($record);
+    }
+
+    public static function signin($username, $password) {
+        $md5password = self::md5password($password);
+        $simpleUser = self::userFromUsernamePassword($username, $md5password);
+        DAssert::assert($simpleUser instanceof MSimpleUser, 'illegal user');
+        LibSimpleUser::persistentAuth($username, $md5password);
+        return $simpleUser;
+    }
+
+    public static function signup($username, $password) {
+        $md5password = self::md5password($password);
+        return DalSimpleUser::addUser($username, $md5password);
     }
 
     public static function signout() {

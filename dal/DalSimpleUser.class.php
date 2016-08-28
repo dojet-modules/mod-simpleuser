@@ -33,13 +33,6 @@ class DalSimpleUser extends BaseModuleDal {
                   UNIQUE KEY `username` (`username`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户';";
         self::doCreateTable($sql);
-
-        $arrIns = array(
-            'username' => 'admin',
-            'md5password' => md5('admin'),
-            'createtime' => time(),
-            );
-        self::doInsert($tableNameUser, $arrIns);
     }
 
     public static function getUserFromUsernamePassword($username, $md5password) {
@@ -52,14 +45,6 @@ class DalSimpleUser extends BaseModuleDal {
         return self::rs2rowline($sql);
     }
 
-    public static function md5password($password) {
-        $md5password = $password;
-        for ($i = 0; $i < 5; $i++) {
-            $md5password = md5($md5password.md5($password));
-        }
-        return $md5password;
-    }
-
     public static function getUserList() {
         $tableNameUser = static::tableNameUser();
         $sql = "SELECT *
@@ -67,8 +52,7 @@ class DalSimpleUser extends BaseModuleDal {
         return self::rs2array($sql);
     }
 
-    public static function addUser($username, $password) {
-        $md5password = self::md5password($password);
+    public static function addUser($username, $md5password) {
         $arrIns = array(
             'username' => $username,
             'md5password' => $md5password,

@@ -9,7 +9,6 @@ DAutoloader::getInstance()->addNamespacePathArray(__NAMESPACE__,
         __DIR__.'/lib/',
         __DIR__.'/dal/',
         __DIR__.'/model/',
+        __DIR__.'/ui/',
     )
 );
-
-// ModuleSimpleUser::init();

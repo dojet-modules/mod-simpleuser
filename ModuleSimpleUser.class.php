@@ -20,16 +20,6 @@ implements IDatabaseModule {
     protected $database;
     protected $tableNameUser = 'simple_user';
 
-    function __construct() {
-        $this->persistentCookieName = '_pss';
-        $this->aes_key = 'iwillwin';
-        $this->aes_iv = 'noproblem.......';
-    }
-
-    protected function depends() {
-        return array();
-    }
-
     public function database() {
         return $this->database;
     }
