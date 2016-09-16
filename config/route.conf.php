@@ -5,8 +5,8 @@ Dispatcher::loadNamespaceRoute('\Mod\SimpleUser\\',
     array(
         '/^signin$/' => $__su_tmp.'SimpleSigninAction',
         '/^signup$/' => $__su_tmp.'SimpleSignupAction',
-        '/^signin-commit$/' => $__su_tmp.'SimpleSigninCommitAction',
-        '/^signup-commit$/' => $__su_tmp.'SimpleSignupCommitAction',
+        '/^signin\-commit$/' => $__su_tmp.'SimpleSigninCommitAction',
+        '/^signup\-commit$/' => $__su_tmp.'SimpleSignupCommitAction',
     )
 );
 
