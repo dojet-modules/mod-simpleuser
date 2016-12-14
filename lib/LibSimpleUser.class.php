@@ -51,5 +51,10 @@ class LibSimpleUser {
         MCookie::removeCookie(self::persistentCookieName());
     }
 
+    public static function addUser($username, $password) {
+        $md5password = MSimpleUser::md5password($password);
+        return DalSimpleUser::addUser($username, $md5password);
+    }
+
 }
 

@@ -11,6 +11,7 @@
 namespace Mod\SimpleUser;
 
 use \BaseModuleDal;
+use \DAssert;
 
 class DalSimpleUser extends BaseModuleDal {
 
@@ -50,6 +51,15 @@ class DalSimpleUser extends BaseModuleDal {
         $sql = "SELECT *
                 FROM $tableNameUser";
         return self::rs2array($sql);
+    }
+
+    public static function getUser($uid) {
+        $tableNameUser = static::tableNameUser();
+        DAssert::assertNumeric($uid);
+        $sql = "SELECT *
+                FROM $tableNameUser
+                WHERE uid=$uid";
+        return self::rs2rowline($sql);
     }
 
     public static function addUser($username, $md5password) {
