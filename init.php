@@ -12,3 +12,5 @@ DAutoloader::getInstance()->addNamespacePathArray(__NAMESPACE__,
         __DIR__.'/ui/',
     )
 );
+
+define('SIMPLEUSER_CONFIG', __DIR__.'/config/');
