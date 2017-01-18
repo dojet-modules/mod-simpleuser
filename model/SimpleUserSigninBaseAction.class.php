@@ -14,7 +14,7 @@ abstract class SimpleUserSigninBaseAction extends AbstractSimpleUserBaseAction {
     final public function execute() {
         try {
             $me = MSimpleUser::getSigninUser();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->assign('is_signin', false);
             return $this->notSignin();
         }

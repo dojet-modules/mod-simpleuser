@@ -15,13 +15,11 @@ class SimpleSignupCommitAction extends AbstractSimpleUserBaseAction {
         $username = MRequest::post('username');
         $password = MRequest::post('password');
 
-        var_dump($username, $password, $_POST);
-
         MSimpleUser::signup($username, $password);
 
         MSimpleUser::signin($username, $password);
 
-        // redirect('/');
+        redirect('/');
     }
 
 }
