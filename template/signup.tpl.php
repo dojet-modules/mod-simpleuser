@@ -25,7 +25,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-4 col-md-4 col-xs-offset-4">
-          <form action="/signup-commit" method="post">
+          <form action="/signup-commit" id="form-signup" method="post">
             <h2>注册</h2>
             <div class="form-group">
               <label for="username">用户名</label>
@@ -34,6 +34,10 @@
             <div class="form-group">
               <label for="password">密码</label>
               <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+              <label for="cfmpwd">确认密码</label>
+              <input type="password" name="cfmpwd" class="form-control" id="cfmpwd" placeholder="Confirm Password">
             </div>
             <button type="submit" class="btn btn-default">注册</button>
             <a href="/signin" class="btn pull-right">&raquo; 已注册，登录</a>
@@ -53,3 +57,14 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   </body>
 </html>
+<script type="text/javascript">
+  $().ready(function() {
+    $('#form-signup').submit(function() {
+      if ($('#password').val() != $('#cfmpwd').val()) {
+        alert('密码不一致');
+        $('#password').focus();
+        return false;
+      }
+    });
+  });
+</script>
