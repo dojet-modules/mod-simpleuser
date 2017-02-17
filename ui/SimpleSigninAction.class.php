@@ -8,10 +8,27 @@
  */
 namespace Mod\SimpleUser;
 
-class SimpleSigninAction extends AbstractSimpleUserBaseAction {
+class SimpleSigninAction extends AbstractSimpleUserBaseAction
+implements SimpleSigninDelegate {
+
+    protected static $delegate;
+
+    function __construct() {
+        parent::__construct();
+        self::setDelegate($this);
+    }
+
+    public static function setDelegate(SimpleSigninDelegate $delegate) {
+        self::$delegate = $delegate;
+    }
 
     public function execute() {
-        $this->displayTemplate('signin.tpl.php');
+        $template = safeCallMethod(self::$delegate, 'template');
+        $this->display($template);
+    }
+
+    public function template() {
+        return realpath(__DIR__.'/../template').'/signin.tpl.php';
     }
 
 }
