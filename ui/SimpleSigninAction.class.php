@@ -15,7 +15,8 @@ implements SimpleSigninDelegate {
 
     function __construct() {
         parent::__construct();
-        self::setDelegate($this);
+        $delegate = ModuleSimpleUser::config('delegate.signin');
+        self::setDelegate($delegate ? $delegate : $this);
     }
 
     public static function setDelegate(SimpleSigninDelegate $delegate) {
@@ -23,12 +24,17 @@ implements SimpleSigninDelegate {
     }
 
     public function execute() {
+        safeCallMethod(self::$delegate, 'beforeDisplay', $this);
         $template = safeCallMethod(self::$delegate, 'template');
         $this->display($template);
     }
 
     public function template() {
         return realpath(__DIR__.'/../template').'/signin.tpl.php';
+    }
+
+    public function beforeDisplay(SimpleSigninAction $action) {
+
     }
 
 }

@@ -73,6 +73,11 @@ class MSimpleUser {
     }
 
     public static function signup($username, $password) {
+        $userinfo = DalSimpleUser::getUserByUsername($username);
+        if ($userinfo) {
+            throw new \Exception("用户已存在", 1);
+        }
+
         $md5password = self::md5password($password);
         return DalSimpleUser::addUser($username, $md5password);
     }

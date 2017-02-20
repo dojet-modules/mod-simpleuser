@@ -7,6 +7,7 @@ namespace Mod\SimpleUser;
 
 interface SimpleSignupCommitDelegate {
 
-    public function didSignup($username, $password);
+    public function willSignup(&$username, &$password);
+    public function didSignup(MSimpleUser $simpleUser);
 
 }

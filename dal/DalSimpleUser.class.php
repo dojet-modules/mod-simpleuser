@@ -62,6 +62,15 @@ class DalSimpleUser extends BaseModuleDal {
         return self::rs2rowline($sql);
     }
 
+    public static function getUserByUsername($username) {
+        $tableNameUser = static::tableNameUser();
+        self::escape($username);
+        $sql = "SELECT *
+                FROM $tableNameUser
+                WHERE username=\"$username\"";
+        return self::rs2rowline($sql);
+    }
+
     public static function addUser($username, $md5password) {
         $arrIns = array(
             'username' => $username,

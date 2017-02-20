@@ -9,4 +9,6 @@ interface SimpleSigninDelegate {
 
     public function template();
 
+    public function beforeDisplay(SimpleSigninAction $action);
+
 }

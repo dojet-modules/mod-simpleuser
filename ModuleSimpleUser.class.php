@@ -62,4 +62,20 @@ implements IDatabaseModule {
         return $this->aesIV;
     }
 
+    public static function setSigninDelegate(SimpleSigninDelegate $delegate) {
+        return $this->config('delegate.signin', $delegate);
+    }
+
+    public static function setSigninCommitDelegate(SimpleSigninCommitDelegate $delegate) {
+        return $this->config('delegate.signincommit', $delegate);
+    }
+
+    public static function setSignupDelegate(SimpleSignupDelegate $delegate) {
+        return $this->config('delegate.signup', $delegate);
+    }
+
+    public static function setSignupCommitDelegate(SimpleSignupCommitDelegate $delegate) {
+        return $this->config('delegate.signupcommit', $delegate);
+    }
+
 }

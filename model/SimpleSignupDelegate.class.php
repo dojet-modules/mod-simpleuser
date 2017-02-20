@@ -9,4 +9,6 @@ interface SimpleSignupDelegate {
 
     public function template();
 
+    public function beforeDisplay(SimpleSignupAction $action);
+
 }

@@ -9,9 +9,16 @@
 namespace Mod\SimpleUser;
 use \MRequest;
 
-class SimpleSignupCommitAction extends AbstractSimpleUserBaseAction {
+class SimpleSignupCommitAction extends AbstractSimpleUserBaseAction
+implements SimpleSignupCommitDelegate {
 
     protected static $delegate;
+
+    function __construct() {
+        parent::__construct();
+        $delegate = ModuleSimpleUser::config('delegate.signupcommit');
+        self::setDelegate($delegate ? $delegate : $this);
+    }
 
     public static function setDelegate(SimpleSignupCommitDelegate $delegate) {
         self::$delegate = $delegate;
@@ -21,18 +28,31 @@ class SimpleSignupCommitAction extends AbstractSimpleUserBaseAction {
         $username = MRequest::post('username');
         $password = MRequest::post('password');
 
-        if (false === safeCallMethod(self::$delegate, 'shouldSignup', $username, $password)) {
-            return $this->abort($username, $password);
-        } else {
-            MSimpleUser::signup($username, $password);
-            MSimpleUser::signin($username, $password);
-            safeCallMethod(self::$delegate, 'didSignup', $username, $password);
-            redirect('/');
+        if (self::$delegate) {
+            self::$delegate->willSignup($username, $password);
         }
+
+        try {
+            MSimpleUser::signup($username, $password);
+        } catch (\Exception $e) {
+            return $this->userAlreadyExists($username);
+        }
+
+        $simpleUser = MSimpleUser::signin($username, $password);
+        safeCallMethod(self::$delegate, 'didSignup', $simpleUser);
+        redirect('/');
     }
 
-    public function abort($username, $password) {
-        print 'abort';
+    public function willSignup(&$username, &$password) {
+
+    }
+
+    public function didSignup(MSimpleUser $simpleUser) {
+        # code...
+    }
+
+    public function userAlreadyExists($username) {
+        print '用户名已存在';
     }
 
 }
