@@ -21,10 +21,10 @@ abstract class SimpleUserSigninBaseAction extends AbstractSimpleUserBaseAction {
 
         $this->assign('is_signin', true);
         $this->assign('me', $me);
-        return $this->signinExecute($me);
+        return $this->simpleUserSigninExecute($me);
     }
 
-    abstract protected function signinExecute(MSimpleUser $me);
+    abstract protected function simpleUserSigninExecute(MSimpleUser $me);
 
     protected function notSignin() {
         redirect('/signin');

@@ -12,15 +12,36 @@ class MSimpleUser {
     const E_LOGOFF      = 0x00100002;   # 已注销
 
     protected $uid;
-    protected $username;
 
-    function __construct($uid, $username) {
+    protected $record;
+
+    function __construct($uid, $record = null) {
         $this->uid = $uid;
-        $this->username = $username;
+        $this->record = $record;
+    }
+
+    public static function simpleUserByUID($uid) {
+        return new MSimpleUser($uid);
+    }
+
+    protected function loadSimpleUser() {
+        $record = DalSimpleUser::getUser($this->uid);
+        if (is_null($record)) {
+            throw new Exception("simpleUser not exists, uid=".$this->uid, 1);
+        }
+        return $record;
+    }
+
+    protected function record() {
+        if (is_null($this->record)) {
+            $this->record = loadSimpleUser();
+        }
+        return $this->record;
     }
 
     public function username() {
-        return $this->username;
+        $record = $this->record();
+        return $record['username'];
     }
 
     public function uid() {
@@ -36,16 +57,16 @@ class MSimpleUser {
     }
 
     public static function simpleUserFromDBRecord($record) {
-        $simpleUser = new MSimpleUser($record['uid'], $record['username']);
+        $simpleUser = new MSimpleUser($record['uid'], $record);
         return $simpleUser;
     }
 
     public static function userFromUsernamePassword($username, $md5password) {
-        $userinfo = DalSimpleUser::getUserFromUsernamePassword($username, $md5password);
-        if (!$userinfo) {
+        $record = DalSimpleUser::getUserFromUsernamePassword($username, $md5password);
+        if (!$record) {
             throw new \Exception("username and password not match", 1);
         }
-        return MSimpleUser::simpleUserFromDBRecord($userinfo);
+        return MSimpleUser::simpleUserFromDBRecord($record);
     }
 
     public static function getSigninUser() {
