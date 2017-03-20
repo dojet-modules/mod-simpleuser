@@ -29,13 +29,16 @@ implements SimpleSignupCommitDelegate {
         $password = MRequest::post('password');
 
         if (self::$delegate) {
-            self::$delegate->willSignup($username, $password);
+            $ret = self::$delegate->willSignup($username, $password);
+            if (false === $ret) {
+                return;
+            }
         }
 
         try {
             MSimpleUser::signup($username, $password);
         } catch (\Exception $e) {
-            return $this->userAlreadyExists($username);
+            return safeCallMethod(self::$delegate, 'userAlreadyExists', $username);
         }
 
         $simpleUser = MSimpleUser::signin($username, $password);

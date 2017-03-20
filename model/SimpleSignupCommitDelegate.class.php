@@ -9,5 +9,6 @@ interface SimpleSignupCommitDelegate {
 
     public function willSignup(&$username, &$password);
     public function didSignup(MSimpleUser $simpleUser);
+    public function userAlreadyExists($username);
 
 }
