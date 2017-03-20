@@ -10,6 +10,7 @@ class MSimpleUser {
 
     const E_NOT_SIGNIN  = 0x00100001;   # 未登录
     const E_LOGOFF      = 0x00100002;   # 已注销
+    const E_WRONG_PWD   = 0x00100003;   # 用户名密码不匹配
 
     protected $uid;
 
@@ -64,7 +65,7 @@ class MSimpleUser {
     public static function userFromUsernamePassword($username, $md5password) {
         $record = DalSimpleUser::getUserFromUsernamePassword($username, $md5password);
         if (!$record) {
-            throw new \Exception("username and password not match", 1);
+            throw new \Exception("用户名密码不匹配", self::E_WRONG_PWD);
         }
         return MSimpleUser::simpleUserFromDBRecord($record);
     }

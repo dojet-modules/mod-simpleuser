@@ -14,24 +14,29 @@ implements SimpleSigninCommitDelegate {
 
     protected static $delegate;
 
-    public static function setDelegate(SimpleSigninCommitDelegate $delegate) {
+    function __construct() {
         parent::__construct();
         $delegate = ModuleSimpleUser::config('delegate.signincommit');
         self::setDelegate($delegate ? $delegate : $this);
+    }
+
+    public static function setDelegate(SimpleSigninCommitDelegate $delegate) {
+        self::$delegate = $delegate;
     }
 
     public function execute() {
         $username = MRequest::post('username');
         $password = MRequest::post('password');
 
-        // if (false === safeCallMethod(self::$delegate, 'shouldSignin', $username, $password)) {
-        //     return $this->abort($username, $password);
-        // } else {
-            safeCallMethod(self::$delegate, 'willSignin', $username, $password);
+        $delegate = self::$delegate;
+        $delegate->willSignin($username, $password);
+        try {
             $simpleUser = MSimpleUser::signin($username, $password);
-            safeCallMethod(self::$delegate, 'didSignin', $simpleUser);
-            redirect('/');
-        // }
+        } catch (\Exception $e) {
+            return $delegate->signinFailed($e);
+        }
+        $delegate->didSignin($simpleUser);
+        redirect('/');
     }
 
     public function abort($username, $password) {
@@ -46,4 +51,7 @@ implements SimpleSigninCommitDelegate {
 
     }
 
+    public function signinFailed(\Exception $e) {
+
+    }
 }

@@ -9,5 +9,6 @@ interface SimpleSigninCommitDelegate {
 
     public function willSignin($username, $password);
     public function didSignin(MSimpleUser $simpleUser);
+    public function signinFailed(\Exception $e);
 
 }
