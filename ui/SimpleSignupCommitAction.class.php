@@ -38,11 +38,11 @@ implements SimpleSignupCommitDelegate {
         try {
             MSimpleUser::signup($username, $password);
         } catch (\Exception $e) {
-            return safeCallMethod(self::$delegate, 'userAlreadyExists', $username);
+            return self::$delegate->userAlreadyExists($username);
         }
 
         $simpleUser = MSimpleUser::signin($username, $password);
-        safeCallMethod(self::$delegate, 'didSignup', $simpleUser);
+        self::$delegate->didSignup($simpleUser);
         redirect('/');
     }
 
