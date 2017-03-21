@@ -29,7 +29,10 @@ implements SimpleSigninCommitDelegate {
         $password = MRequest::post('password');
 
         $delegate = self::$delegate;
-        $delegate->willSignin($username, $password);
+        if (false === $delegate->shouldSignin($username, $password)) {
+            return;
+        }
+
         try {
             $simpleUser = MSimpleUser::signin($username, $password);
         } catch (\Exception $e) {
@@ -43,7 +46,7 @@ implements SimpleSigninCommitDelegate {
         print 'abort';
     }
 
-    public function willSignin($username, $password) {
+    public function shouldSignin(&$username, &$password) {
 
     }
 

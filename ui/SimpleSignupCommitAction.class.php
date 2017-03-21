@@ -29,7 +29,7 @@ implements SimpleSignupCommitDelegate {
         $password = MRequest::post('password');
 
         if (self::$delegate) {
-            $ret = self::$delegate->willSignup($username, $password);
+            $ret = self::$delegate->shouldSignup($username, $password);
             if (false === $ret) {
                 return;
             }
@@ -46,7 +46,7 @@ implements SimpleSignupCommitDelegate {
         redirect('/');
     }
 
-    public function willSignup(&$username, &$password) {
+    public function shouldSignup(&$username, &$password) {
 
     }
 
