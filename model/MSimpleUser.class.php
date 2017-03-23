@@ -49,10 +49,10 @@ class MSimpleUser {
         return $this->uid;
     }
 
-    public static function md5password($password) {
+    public static function md5password($username, $password) {
         $md5password = $password;
         for ($i = 0; $i < 5; $i++) {
-            $md5password = md5($md5password);
+            $md5password = md5($md5password.md5($username));
         }
         return $md5password;
     }
@@ -87,7 +87,7 @@ class MSimpleUser {
     }
 
     public static function signin($username, $password) {
-        $md5password = self::md5password($password);
+        $md5password = self::md5password($username, $password);
         $simpleUser = self::userFromUsernamePassword($username, $md5password);
         DAssert::assert($simpleUser instanceof MSimpleUser, 'illegal user');
         LibSimpleUser::persistentAuth($username, $md5password);
@@ -100,7 +100,7 @@ class MSimpleUser {
             throw new \Exception("用户已存在", 1);
         }
 
-        $md5password = self::md5password($password);
+        $md5password = self::md5password($username, $password);
         return DalSimpleUser::addUser($username, $md5password);
     }
 
