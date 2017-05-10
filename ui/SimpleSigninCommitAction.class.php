@@ -39,7 +39,6 @@ implements SimpleSigninCommitDelegate {
             return $delegate->signinFailed($e);
         }
         $delegate->didSignin($simpleUser);
-        redirect('/');
     }
 
     public function abort($username, $password) {
@@ -51,7 +50,7 @@ implements SimpleSigninCommitDelegate {
     }
 
     public function didSignin(MSimpleUser $simpleUser) {
-
+        redirect('/');
     }
 
     public function signinFailed(\Exception $e) {

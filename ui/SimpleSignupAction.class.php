@@ -24,7 +24,9 @@ implements SimpleSignupDelegate {
     }
 
     public function execute() {
-        safeCallMethod(self::$delegate, 'beforeDisplay', $this);
+        if (false === safeCallMethod(self::$delegate, 'beforeDisplay', $this)) {
+            return;
+        }
         $template = safeCallMethod(self::$delegate, 'template');
         $this->display($template);
     }
