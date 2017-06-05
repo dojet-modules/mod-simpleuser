@@ -43,7 +43,10 @@ implements SimpleSignupCommitDelegate {
 
         $simpleUser = MSimpleUser::signin($username, $password);
         self::$delegate->didSignup($simpleUser);
-        redirect('/');
+
+        $nextjump = self::$delegate->nextjump();
+        $nextjump = is_null($nextjump) ? '/' : $nextjump;
+        redirect($nextjump);
     }
 
     public function shouldSignup(&$username, &$password) {
@@ -51,7 +54,11 @@ implements SimpleSignupCommitDelegate {
     }
 
     public function didSignup(MSimpleUser $simpleUser) {
-        # code...
+
+    }
+
+    public function nextjump() {
+        return '/';
     }
 
     public function userAlreadyExists($username) {

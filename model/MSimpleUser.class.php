@@ -25,6 +25,14 @@ class MSimpleUser {
         return new MSimpleUser($uid);
     }
 
+    public static function simpleUserByUsername($username) {
+        $record = DalSimpleUser::getUserFromUsername($username);
+        if (is_null($record)) {
+            throw new Exception("simpleUser not exists, username=".$username, 1);
+        }
+        return self::simpleUserFromDBRecord($record);
+    }
+
     protected function loadSimpleUser() {
         $record = DalSimpleUser::getUser($this->uid);
         if (is_null($record)) {
