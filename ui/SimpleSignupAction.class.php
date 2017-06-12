@@ -13,8 +13,8 @@ implements SimpleSignupDelegate {
 
     protected static $delegate;
 
-    function __construct() {
-        parent::__construct();
+    function __construct(\WebService $webService) {
+        parent::__construct($webService);
         $delegate = ModuleSimpleUser::config('delegate.signup');
         self::setDelegate($delegate ? $delegate : $this);
     }

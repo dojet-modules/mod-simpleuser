@@ -14,8 +14,8 @@ implements SimpleSigninCommitDelegate {
 
     protected static $delegate;
 
-    function __construct() {
-        parent::__construct();
+    function __construct(\WebService $webService) {
+        parent::__construct($webService);
         $delegate = ModuleSimpleUser::config('delegate.signincommit');
         self::setDelegate($delegate ? $delegate : $this);
     }
@@ -30,13 +30,14 @@ implements SimpleSigninCommitDelegate {
 
         $delegate = self::$delegate;
         if (false === $delegate->shouldSignin($username, $password)) {
-            return;
+            return $this->displayNoticePage($delegate);
         }
 
         try {
             $simpleUser = MSimpleUser::signin($username, $password);
         } catch (\Exception $e) {
-            return $delegate->signinFailed($e);
+            $delegate->signinFailed($e);
+            return $this->displayNoticePage($delegate);
         }
         $delegate->didSignin($simpleUser);
     }

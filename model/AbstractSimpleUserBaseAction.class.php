@@ -15,4 +15,19 @@ abstract class AbstractSimpleUserBaseAction extends \XBaseAction {
         return realpath(__DIR__.'/../template').'/';
     }
 
+    protected function displayNoticePage($sign) {
+        if (!($sign instanceof SimpleSign)) {
+            return ;
+        }
+        $notice = $sign->notice();
+        $template = $sign->noticeTemplate();
+
+        $message = $notice->message();
+        $links = $notice->links();
+
+        $this->assign('message', $message);
+        $this->assign('links', $links);
+        $this->display($template);
+    }
+
 }
